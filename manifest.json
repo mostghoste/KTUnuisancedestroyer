@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "KTU nuisance destroyer",
+    "version": "1.0",
+    "description": "Automatically fills in the TOTP authenticator code on a specified page.",
+    "permissions": [
+      "activeTab",
+      "storage"
+    ],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://login.ktu.lt/simplesaml/module.php/privacyidea/formBuilderMain*"],
+        "js": ["content.js"]
+      }
+    ],
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon.png"
+      }
+    },
+    "icons": {
+      "16": "icon.png"
+    }
+  }
+  
