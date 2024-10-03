@@ -47,7 +47,7 @@ function executeWhenPageLoaded() {
     browser.storage.local.get(['sharedSecret', 'autoLogin'])
         .then((data) => {
             if (data.sharedSecret) {
-                console.log("Shared secret retrieved:", data.sharedSecret);
+                console.log("Shared secret found and retrieved.");
 
                 try {
                     // Generate the TOTP code using the shared secret
