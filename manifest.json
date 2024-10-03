@@ -14,7 +14,7 @@
     "content_scripts": [
       {
         "matches": ["*://login.ktu.lt/simplesaml/module.php/privacyidea/formBuilderMain*"],
-        "js": ["content.js"]
+        "js": ["sha.js", "content.js"]
       }
     ],
     "browser_action": {
