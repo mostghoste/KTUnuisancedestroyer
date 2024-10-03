@@ -43,8 +43,8 @@ function generateTOTP(secret) {
 function executeWhenPageLoaded() {
     console.log("Page fully loaded. Attempting to retrieve shared secret...");
 
-    // Retrieve the shared secret from the extension's storage
-    browser.storage.local.get('sharedSecret')
+    // Retrieve the shared secret and auto-login setting from storage
+    browser.storage.local.get(['sharedSecret', 'autoLogin'])
         .then((data) => {
             if (data.sharedSecret) {
                 console.log("Shared secret retrieved:", data.sharedSecret);
@@ -54,7 +54,7 @@ function executeWhenPageLoaded() {
                     const totpCode = generateTOTP(data.sharedSecret);
                     console.log("Generated TOTP code:", totpCode);
 
-                    // Replace the selector below with the specific input field selector
+                    // Find the input field to insert the OTP
                     const inputField = document.querySelector('input[name="otp"]');
 
                     if (inputField) {
@@ -65,6 +65,23 @@ function executeWhenPageLoaded() {
 
                         // Trigger an input event to notify the page of the change
                         inputField.dispatchEvent(new Event('input', { bubbles: true }));
+
+                        // Check if auto-login is enabled and trigger the login button click
+                        if (data.autoLogin) {
+                            console.log("Auto-login is enabled. Attempting to press the login button...");
+                            const loginButton = document.querySelector('input[type="submit"]'); // Updated selector
+                            if (loginButton) {
+                                setTimeout(() => {
+                                    loginButton.click();
+                                    console.log("Login button clicked.");
+                                }, 500); // 500 milliseconds delay
+                            } else {
+                                console.error("Login button not found. Check the selector.");
+                            }
+                        }                        
+                        else {
+                            console.log("Autologin disabled.")
+                        }
                     } else {
                         console.error("Input field not found. Check the selector.");
                     }
