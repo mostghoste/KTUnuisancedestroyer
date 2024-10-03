@@ -25,6 +25,11 @@
     },
     "icons": {
       "16": "icon.png"
+    },
+    "applications": {
+      "gecko": {
+        "id": "ktu-nuisance-destroyer@domain.lt"
+      }
     }
   }
   
