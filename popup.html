@@ -1,13 +1,47 @@
-<!-- popup.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Authenticator Setup</title>
+    <style>
+        /* Style the popup to make it larger */
+        body {
+            width: 200px; /* Set the width of the popup */
+            height: 150px; /* Set the height of the popup */
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #2c2c2c;
+            color: white;
+        }
+
+        /* Style the input and button */
+        #secret {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #save {
+            padding: 5px 10px;
+        }
+
+        /* Message styling */
+        #message {
+            margin-top: 10px;
+            font-size: 12px;
+            color: lightgreen;
+            display: none; /* Hidden by default */
+        }
+    </style>
 </head>
 <body>
     <h3>Set Shared Secret</h3>
     <input type="text" id="secret" placeholder="Enter your shared secret" />
     <button id="save">Save</button>
+    <div id="message">Secret saved!</div> <!-- Inline message -->
     <script src="popup.js"></script>
 </body>
 </html>
