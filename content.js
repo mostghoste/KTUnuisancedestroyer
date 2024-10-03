@@ -19,20 +19,25 @@ function base32tohex(base32) {
 }
 
 function generateTOTP(secret) {
-    const epoch = Math.round(new Date().getTime() / 1000.0);
-    const time = Math.floor(epoch / 30).toString(16).padStart(16, '0');
+    try {
+        const epoch = Math.round(new Date().getTime() / 1000.0);
+        const time = Math.floor(epoch / 30).toString(16).padStart(16, '0');
 
-    // Use jsSHA library for HMAC-SHA1 (include this library in your extension)
-    const shaObj = new jsSHA("SHA-1", "HEX");
-    shaObj.setHMACKey(base32tohex(secret), "HEX");
-    shaObj.update(time);
-    const hmac = shaObj.getHMAC("HEX");
+        // Use jsSHA library for HMAC-SHA1 (include this library in your extension)
+        const shaObj = new jsSHA("SHA-1", "HEX");
+        shaObj.setHMACKey(base32tohex(secret), "HEX");
+        shaObj.update(time);
+        const hmac = shaObj.getHMAC("HEX");
 
-    const offset = parseInt(hmac.substring(hmac.length - 1), 16);
-    const binary = parseInt(hmac.substring(offset * 2, offset * 2 + 8), 16) & 0x7fffffff;
-    const otp = binary % 1000000;
+        const offset = parseInt(hmac.substring(hmac.length - 1), 16);
+        const binary = parseInt(hmac.substring(offset * 2, offset * 2 + 8), 16) & 0x7fffffff;
+        const otp = binary % 1000000;
 
-    return otp.toString().padStart(6, '0');
+        return otp.toString().padStart(6, '0');
+    } catch (error) {
+        console.error("TOTP generation failed. Please verify the shared secret.");
+        throw error; // Re-throw the error to be caught in the outer promise chain if needed
+    }
 }
 
 function executeWhenPageLoaded() {
@@ -44,23 +49,27 @@ function executeWhenPageLoaded() {
             if (data.sharedSecret) {
                 console.log("Shared secret retrieved:", data.sharedSecret);
 
-                // Generate the TOTP code using the shared secret
-                const totpCode = generateTOTP(data.sharedSecret);
-                console.log("Generated TOTP code:", totpCode);
+                try {
+                    // Generate the TOTP code using the shared secret
+                    const totpCode = generateTOTP(data.sharedSecret);
+                    console.log("Generated TOTP code:", totpCode);
 
-                // Replace the selector below with the specific input field selector
-                const inputField = document.querySelector('input[name="totp"]');
+                    // Replace the selector below with the specific input field selector
+                    const inputField = document.querySelector('input[name="totp"]');
 
-                if (inputField) {
-                    console.log("Input field found. Inserting TOTP code...");
+                    if (inputField) {
+                        console.log("Input field found. Inserting TOTP code...");
 
-                    // Fill in the TOTP code
-                    inputField.value = totpCode;
+                        // Fill in the TOTP code
+                        inputField.value = totpCode;
 
-                    // Trigger an input event to notify the page of the change
-                    inputField.dispatchEvent(new Event('input', { bubbles: true }));
-                } else {
-                    console.error("Input field not found. Check the selector.");
+                        // Trigger an input event to notify the page of the change
+                        inputField.dispatchEvent(new Event('input', { bubbles: true }));
+                    } else {
+                        console.error("Input field not found. Check the selector.");
+                    }
+                } catch (error) {
+                    console.error("An error occurred during TOTP generation. Please check the shared secret.");
                 }
             } else {
                 console.error("Shared secret not found. Make sure it's set.");
