@@ -3,10 +3,9 @@
 <head>
     <title>Authenticator Setup</title>
     <style>
-        /* Style the popup to make it larger */
         body {
-            width: 200px; /* Set the width of the popup */
-            height: 150px; /* Set the height of the popup */
+            width: 220px;
+            height: 250px;
             margin: 0;
             padding: 10px;
             display: flex;
@@ -17,7 +16,6 @@
             color: white;
         }
 
-        /* Style the input and button */
         #secret {
             margin-bottom: 10px;
             padding: 5px;
@@ -26,22 +24,44 @@
 
         #save {
             padding: 5px 10px;
+            margin-left: 10px;
+            margin-bottom: 10px;
         }
 
-        /* Message styling */
         #message {
             margin-top: 10px;
             font-size: 12px;
             color: lightgreen;
-            display: none; /* Hidden by default */
+            display: none;
+        }
+
+        /* Checkbox styling */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-container label {
+            margin-left: 5px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-    <h3>Set Shared Secret</h3>
-    <input type="text" id="secret" placeholder="Enter your shared secret" />
-    <button id="save">Save</button>
-    <div id="message">Secret saved!</div> <!-- Inline message -->
+    <h3>KTU nuisance destroyer</h3>
+    <input type="password" id="secret" placeholder="Enter your shared secret" />
+    <div class="checkbox-container">
+        <input type="checkbox" id="show-secret" />
+        <label for="show-secret">Show secret</label>
+        <button id="save">Save</button>
+    </div>
+    <h4>Additional options:</h4>
+    <div class="checkbox-container">
+        <input type="checkbox" id="auto-login" />
+        <label for="auto-login">Auto login/submit</label>
+    </div>
+    <div id="message">Secret saved!</div>
     <script src="popup.js"></script>
 </body>
 </html>
