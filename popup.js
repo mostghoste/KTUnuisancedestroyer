@@ -21,42 +21,42 @@ document.addEventListener('DOMContentLoaded', () => {
     showSecretCheckbox.addEventListener('change', () => {
         secretInput.type = showSecretCheckbox.checked ? 'text' : 'password';
     });
+
+    // Save the secret whenever it changes
+    secretInput.addEventListener('input', () => {
+        const secret = secretInput.value;
+        saveSettings({ sharedSecret: secret });
+    });
+
+    // Save the auto-login setting whenever it changes
+    autoLoginCheckbox.addEventListener('change', () => {
+        const autoLogin = autoLoginCheckbox.checked;
+        saveSettings({ autoLogin: autoLogin });
+    });
 });
 
-// Save the settings when the save button is clicked
-document.getElementById('save').addEventListener('click', () => {
-    const secret = document.getElementById('secret').value;
-    const autoLogin = document.getElementById('auto-login').checked;
-    const message = document.getElementById('message');
+// Function to save settings and display a message
+function saveSettings(settings) {
+    browser.storage.local.set(settings)
+        .then(() => {
+            console.log("Settings saved to storage:", settings);
 
-    console.log("Save button clicked. Secret entered:", secret);
+            // Display a success message
+            const message = document.getElementById('message');
+            message.textContent = 'Settings saved!';
+            message.style.display = 'block';
+            message.style.color = 'lightgreen';
 
-    if (secret) {
-        // Send the settings to be saved in storage
-        browser.storage.local.set({ sharedSecret: secret, autoLogin: autoLogin })
-            .then(() => {
-                console.log("Settings saved to storage.");
-
-                // Display a success message
-                message.textContent = 'Settings saved!';
-                message.style.display = 'block';
-                message.style.color = 'lightgreen';
-
-                // Hide the message after a short delay
-                setTimeout(() => {
-                    message.style.display = 'none';
-                }, 2000);
-            })
-            .catch((error) => {
-                console.error("Error saving settings:", error);
-                message.textContent = 'Failed to save settings.';
-                message.style.color = 'red';
-                message.style.display = 'block';
-            });
-    } else {
-        console.error("No secret entered.");
-        message.textContent = 'Please enter a secret.';
-        message.style.color = 'red';
-        message.style.display = 'block';
-    }
-});
+            // Hide the message after a short delay
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        })
+        .catch((error) => {
+            console.error("Error saving settings:", error);
+            const message = document.getElementById('message');
+            message.textContent = 'Failed to save settings.';
+            message.style.color = 'red';
+            message.style.display = 'block';
+        });
+}

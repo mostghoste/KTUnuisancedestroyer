@@ -44,7 +44,7 @@ function executeWhenPageLoaded() {
     console.log("Page fully loaded. Attempting to retrieve shared secret...");
 
     // Retrieve the shared secret from the extension's storage
-    browser.storage.sync.get('sharedSecret')
+    browser.storage.local.get('sharedSecret')
         .then((data) => {
             if (data.sharedSecret) {
                 console.log("Shared secret retrieved:", data.sharedSecret);
