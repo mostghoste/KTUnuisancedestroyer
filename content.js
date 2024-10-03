@@ -55,7 +55,7 @@ function executeWhenPageLoaded() {
                     console.log("Generated TOTP code:", totpCode);
 
                     // Replace the selector below with the specific input field selector
-                    const inputField = document.querySelector('input[name="totp"]');
+                    const inputField = document.querySelector('input[name="otp"]');
 
                     if (inputField) {
                         console.log("Input field found. Inserting TOTP code...");
