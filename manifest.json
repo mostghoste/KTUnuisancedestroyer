@@ -39,9 +39,6 @@
       "gecko": {
         "id": "ktu-nuisance-destroyer@domain.lt"
       }
-    },
-    "web_accessible_resources": [
-        "consent.js"
-    ]
+    }
   }
   
