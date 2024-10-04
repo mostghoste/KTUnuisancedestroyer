@@ -40,6 +40,16 @@ function generateTOTP(secret) {
     }
 }
 
+function incrementCounter(counterKey) {
+    browser.storage.local.get(counterKey).then((data) => {
+        let count = data[counterKey] || 0;
+        count++;
+        let update = {};
+        update[counterKey] = count;
+        browser.storage.local.set(update);
+    });
+}
+
 function executeWhenPageLoaded() {
     console.log("Page fully loaded. Attempting to retrieve shared secret...");
 
@@ -66,6 +76,9 @@ function executeWhenPageLoaded() {
                         // Trigger an input event to notify the page of the change
                         inputField.dispatchEvent(new Event('input', { bubbles: true }));
 
+                        // Increment the TOTP autofill counter
+                        incrementCounter('totpCount');
+
                         // Check if auto-login is enabled and trigger the login button click
                         if (data.autoLogin) {
                             console.log("Auto-login is enabled. Attempting to press the login button...");
@@ -78,9 +91,8 @@ function executeWhenPageLoaded() {
                             } else {
                                 console.error("Login button not found. Check the selector.");
                             }
-                        }                        
-                        else {
-                            console.log("Autologin disabled.")
+                        } else {
+                            console.log("Autologin disabled.");
                         }
                     } else {
                         console.error("Input field not found. Check the selector.");

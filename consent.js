@@ -15,6 +15,9 @@ function handleConsentPage() {
                     setTimeout(() => {
                         consentButton.click();
                         console.log("Consent button clicked.");
+
+                        // Increment the consent skip counter
+                        incrementCounter('consentCount');
                     }, 500); // 500 milliseconds delay
                 } else {
                     console.error("Consent button not found. Check the selector.");
@@ -26,6 +29,17 @@ function handleConsentPage() {
         .catch((error) => {
             console.error("Error retrieving auto-consent setting:", error);
         });
+}
+
+// Function to increment a counter in storage
+function incrementCounter(counterKey) {
+    browser.storage.local.get(counterKey).then((data) => {
+        let count = data[counterKey] || 0;
+        count++;
+        let update = {};
+        update[counterKey] = count;
+        browser.storage.local.set(update);
+    });
 }
 
 // Check if the document is already loaded

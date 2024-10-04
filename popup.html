@@ -5,7 +5,7 @@
     <style>
         body {
             width: 220px;
-            height: 250px;
+            height: 350px;
             margin: 0;
             padding: 10px;
             display: flex;
@@ -40,6 +40,11 @@
             margin-left: 5px;
             font-size: 12px;
         }
+
+        .statistics {
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -57,6 +62,11 @@
     <div class="checkbox-container">
         <input type="checkbox" id="auto-consent" />
         <label for="auto-consent">Auto consent information transfer</label>
+    </div>
+    <div class="statistics">
+        <p>How many times you were saved from:</p>
+        <p>Entering the TOTP: <span id="totp-count">0</span></p>
+        <p>Giving consent: <span id="consent-count">0</span></p>
     </div>
     <div id="message">Settings saved!</div>
     <script src="popup.js"></script>

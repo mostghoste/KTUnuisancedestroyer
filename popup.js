@@ -1,13 +1,15 @@
-// When the popup loads, retrieve and display stored settings
+// When the popup loads, retrieve and display stored settings and statistics
 document.addEventListener('DOMContentLoaded', () => {
     const secretInput = document.getElementById('secret');
     const showSecretCheckbox = document.getElementById('show-secret');
     const autoLoginCheckbox = document.getElementById('auto-login');
     const autoConsentCheckbox = document.getElementById('auto-consent');
     const message = document.getElementById('message');
+    const totpCountElement = document.getElementById('totp-count');
+    const consentCountElement = document.getElementById('consent-count');
 
     // Retrieve and autofill the saved settings
-    browser.storage.local.get(['sharedSecret', 'autoLogin', 'autoConsent']).then((data) => {
+    browser.storage.local.get(['sharedSecret', 'autoLogin', 'autoConsent', 'totpCount', 'consentCount']).then((data) => {
         if (data.sharedSecret) {
             secretInput.value = data.sharedSecret;
         }
@@ -17,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.autoConsent) {
             autoConsentCheckbox.checked = data.autoConsent;
         }
+        // Display the statistics
+        totpCountElement.textContent = data.totpCount || 0;
+        consentCountElement.textContent = data.consentCount || 0;
     }).catch((error) => {
         console.error('Error retrieving settings:', error);
     });
