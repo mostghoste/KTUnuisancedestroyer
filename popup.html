@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authenticator Setup</title>
+    <style>
+        body {
+            width: 220px;
+            height: 250px;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #2c2c2c;
+            color: white;
+        }
+
+        #secret {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #message {
+            margin-top: 10px;
+            font-size: 12px;
+            color: lightgreen;
+            display: none;
+        }
+
+        /* Checkbox styling */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-container label {
+            margin-left: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h3>KTU nuisance destroyer</h3>
+    <input type="password" id="secret" placeholder="Enter your shared secret" />
+    <div class="checkbox-container">
+        <input type="checkbox" id="show-secret" />
+        <label for="show-secret">Show secret</label>
+    </div>
+    <h4>Additional options:</h4>
+    <div class="checkbox-container">
+        <input type="checkbox" id="auto-login" />
+        <label for="auto-login">Auto login/submit</label>
+    </div>
+    <div id="message">Settings saved!</div>
+    <script src="popup.js"></script>
+</body>
+</html>
