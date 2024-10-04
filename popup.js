@@ -3,15 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const secretInput = document.getElementById('secret');
     const showSecretCheckbox = document.getElementById('show-secret');
     const autoLoginCheckbox = document.getElementById('auto-login');
+    const autoConsentCheckbox = document.getElementById('auto-consent');
     const message = document.getElementById('message');
 
     // Retrieve and autofill the saved settings
-    browser.storage.local.get(['sharedSecret', 'autoLogin']).then((data) => {
+    browser.storage.local.get(['sharedSecret', 'autoLogin', 'autoConsent']).then((data) => {
         if (data.sharedSecret) {
             secretInput.value = data.sharedSecret;
         }
         if (data.autoLogin) {
             autoLoginCheckbox.checked = data.autoLogin;
+        }
+        if (data.autoConsent) {
+            autoConsentCheckbox.checked = data.autoConsent;
         }
     }).catch((error) => {
         console.error('Error retrieving settings:', error);
@@ -32,6 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     autoLoginCheckbox.addEventListener('change', () => {
         const autoLogin = autoLoginCheckbox.checked;
         saveSettings({ autoLogin: autoLogin });
+    });
+
+    // Save the auto-consent setting whenever it changes
+    autoConsentCheckbox.addEventListener('change', () => {
+        const autoConsent = autoConsentCheckbox.checked;
+        saveSettings({ autoConsent: autoConsent });
     });
 });
 

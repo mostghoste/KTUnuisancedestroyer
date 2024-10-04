@@ -13,8 +13,12 @@
     },
     "content_scripts": [
       {
-        "matches": ["*://login.ktu.lt/simplesaml/module.php/privacyidea/formBuilderMain*"],
-        "js": ["sha.js", "content.js"]
+          "matches": ["*://login.ktu.lt/simplesaml/module.php/privacyidea/formBuilderMain*"],
+          "js": ["sha.js", "content.js"]
+      },
+      {
+          "matches": ["*://login.ktu.lt/simplesaml/module.php/consent/getconsent*"],
+          "js": ["consent.js"]
       }
     ],
     "browser_action": {
@@ -35,6 +39,9 @@
       "gecko": {
         "id": "ktu-nuisance-destroyer@domain.lt"
       }
-    }
+    },
+    "web_accessible_resources": [
+        "consent.js"
+    ]
   }
   
