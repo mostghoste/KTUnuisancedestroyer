@@ -2,6 +2,9 @@
 
 KTU Nuisance Destroyer (KND) is a Firefox extension designed to streamline the login process for Kauno technologijos universitetas (KTU) by automatically generating and filling in the TOTP (Time-based One-Time Password) code on the SSO page.
 
+## How to install
+To install the addon for Firefox, you may visit [this link](https://addons.mozilla.org/firefox/downloads/file/4382939/db7b8a60751645de9c88-1.1.xpi).
+
 ## How to Use
 
 ### Step 1: Reconfigure Your Authenticator
